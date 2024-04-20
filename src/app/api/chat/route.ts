@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
     const ingredients = messages.map((item: any) => item.content).join(', ');
-    const prompt = `Generate a detailed recipe in a JSON format using these ingredients: ${ingredients}. Including these keys 'title', 'servings', 'ingredients', and 'instructions'. For each ingredient, include 'item', 'quantity', and 'measurement'. Instructions should be a list of steps.`;
+    const prompt = `Generate three detailed recipes in JSON format using these ingredients: ${ingredients}. Each recipe should be unique and include the keys 'title', 'servings', 'ingredients', and 'instructions'. Each ingredient should specify 'item', 'quantity', and 'measurement'. Instructions should be a list of steps. Each recipe should vary in cuisine or cooking style.`;
 
     // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.chat.completions.create({
