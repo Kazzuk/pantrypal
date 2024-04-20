@@ -14,9 +14,6 @@ export async function POST(req: Request) {
     const ingredients = messages.map((item: any) => item.content).join(', ');
     const prompt = createPrompt(data, ingredients);
 
-    console.log(ingredients);
-    console.log(data);
-
     // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',

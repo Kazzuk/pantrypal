@@ -59,7 +59,7 @@ export default function InputForm({ isLoading, handleInputChange, handleSubmit, 
   };
 
   return (
-    <form onSubmit={localHandleSubmit}>
+    <form onSubmit={localHandleSubmit} className="animate-fade-in">
       <textarea
         ref={textareaRef}
         placeholder="Enter your ingredients..."
