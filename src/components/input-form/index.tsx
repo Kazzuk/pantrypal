@@ -62,7 +62,7 @@ export default function InputForm({ isLoading, handleInputChange, handleSubmit, 
     <form onSubmit={localHandleSubmit}>
       <textarea
         ref={textareaRef}
-        placeholder="Enter the ingredients you have, separated by commas"
+        placeholder="Enter your ingredients..."
         onChange={handleInputChange}
         disabled={isLoading}
         className="textarea textarea-bordered textarea-md mb-6 w-full max-w-md resize-none overflow-y-hidden rounded-lg px-4 py-2 shadow-sm focus:outline-none"
