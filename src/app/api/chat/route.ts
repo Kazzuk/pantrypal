@@ -10,9 +10,25 @@ export const runtime = 'edge';
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, vegetarian, vegan, glutenFree } = await req.json();
+    console.log('Items' + req.json());
     const ingredients = messages.map((item: any) => item.content).join(', ');
-    const prompt = `Generate three detailed recipes in JSON format using these ingredients: ${ingredients}. Each recipe should be unique and include the keys 'title', 'servings', 'ingredients', and 'instructions'. Each ingredient should specify 'item', 'quantity', and 'measurement'. Instructions should be a list of steps. Each recipe should vary in cuisine or cooking style.`;
+    let prompt = `Generate a detailed recipe in a JSON format using these ingredients: ${ingredients}. Including these keys 'title', 'servings', 'ingredients', and 'instructions'. For each ingredient, include 'item', 'quantity', and 'measurement'. Instructions should be a list of steps.`;
+
+    // // Add dietary requirements to the prompt if selected
+    // if (vegetarian) {
+    //   prompt += ` Ensure the recipe is suitable for vegetarians.`;
+    // }
+
+    // if (vegan) {
+    //   prompt += ` Ensure the recipe is suitable for vegans.`;
+    // }
+
+    // if (glutenFree) {
+    //   prompt += ` Ensure the recipe is gluten-free.`;
+    // }
+
+    console.log(prompt);
 
     // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.chat.completions.create({

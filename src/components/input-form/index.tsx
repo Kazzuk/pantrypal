@@ -4,10 +4,16 @@ import { useEffect, useRef } from 'react';
 interface InputFormProps {
   isLoading: boolean;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>, chatRequestOptions?: ChatRequestOptions) => void;
 }
 
-export default function InputForm({ isLoading, handleInputChange, handleSubmit }: InputFormProps) {
+export default function InputForm({
+  isLoading,
+  handleInputChange,
+  handleCheckboxChange,
+  handleSubmit,
+}: InputFormProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -45,6 +51,38 @@ export default function InputForm({ isLoading, handleInputChange, handleSubmit }
         disabled={isLoading}
         className="textarea textarea-bordered textarea-md mb-6 w-full max-w-md resize-none overflow-y-hidden rounded-lg px-4 py-2 shadow-sm focus:outline-none"
       />
+      <div className="mb-6 flex justify-between">
+        <label className="mr-4 inline-flex items-center">
+          <input
+            type="checkbox"
+            name="vegetarian"
+            className="checkbox"
+            disabled={isLoading}
+            onChange={handleCheckboxChange}
+          />
+          <span className="ml-2">Vegetarian</span>
+        </label>
+        <label className="mr-4 inline-flex items-center">
+          <input
+            type="checkbox"
+            name="vegan"
+            className="checkbox"
+            disabled={isLoading}
+            onChange={handleCheckboxChange}
+          />
+          <span className="ml-2">Vegan</span>
+        </label>
+        <label className="inline-flex items-center">
+          <input
+            type="checkbox"
+            name="glutenFree"
+            className="checkbox"
+            disabled={isLoading}
+            onChange={handleCheckboxChange}
+          />
+          <span className="ml-2">Gluten-Free</span>
+        </label>
+      </div>
       <button type="submit" disabled={isLoading} className="btn btn-primary relative w-full rounded-lg">
         {isLoading && (
           <span className="loading loading-dots loading-md absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"></span>
