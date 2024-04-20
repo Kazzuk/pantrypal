@@ -14,8 +14,9 @@ export default function Pagination({ recipes, setActivePage }: PaginationProps) 
   };
 
   const pageNumbers = Array.from({ length: recipes }, (_, i) => i + 1);
-  const middlePage = Math.max(active - Math.floor(recipes / 2), 0);
-  const displayPages = pageNumbers.slice(middlePage, middlePage + recipes);
+  const maxPages = recipes * 2;
+  const middlePage = Math.max(active - Math.floor(maxPages / 2), 0);
+  const displayPages = pageNumbers.slice(middlePage, middlePage + maxPages);
 
   return (
     <div className="flex justify-center space-x-2 px-2">
