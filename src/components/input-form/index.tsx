@@ -1,20 +1,17 @@
 import { ChatRequestOptions } from 'ai';
-import { useEffect, useRef } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 
 interface InputFormProps {
   isLoading: boolean;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
-  handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>, chatRequestOptions?: ChatRequestOptions) => void;
 }
 
-export default function InputForm({
-  isLoading,
-  handleInputChange,
-  handleCheckboxChange,
-  handleSubmit,
-}: InputFormProps) {
+export default function InputForm({ isLoading, handleInputChange, handleSubmit }: InputFormProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isVegetarian, setIsVegetarian] = useState(false);
+  const [isVegan, setIsVegan] = useState(false);
+  const [isGlutenFree, setIsGlutenFree] = useState(false);
 
   useEffect(() => {
     function resizeTextarea() {
@@ -42,8 +39,20 @@ export default function InputForm({
     }
   }, []);
 
+  function localHandleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const requestOptions = {
+      data: {
+        vegetarian: isVegetarian.toString(),
+        vegan: isVegan.toString(),
+        glutenFree: isGlutenFree.toString(),
+      },
+    };
+    handleSubmit(e, requestOptions);
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={localHandleSubmit}>
       <textarea
         ref={textareaRef}
         placeholder="Enter the ingredients you have, separated by commas"
@@ -56,9 +65,10 @@ export default function InputForm({
           <input
             type="checkbox"
             name="vegetarian"
-            className="checkbox"
+            checked={isVegetarian}
+            onChange={(e) => setIsVegetarian(e.target.checked)}
             disabled={isLoading}
-            onChange={handleCheckboxChange}
+            className="checkbox"
           />
           <span className="ml-2">Vegetarian</span>
         </label>
@@ -66,9 +76,10 @@ export default function InputForm({
           <input
             type="checkbox"
             name="vegan"
-            className="checkbox"
+            checked={isVegan}
+            onChange={(e) => setIsVegan(e.target.checked)}
             disabled={isLoading}
-            onChange={handleCheckboxChange}
+            className="checkbox"
           />
           <span className="ml-2">Vegan</span>
         </label>
@@ -76,9 +87,10 @@ export default function InputForm({
           <input
             type="checkbox"
             name="glutenFree"
-            className="checkbox"
+            checked={isGlutenFree}
+            onChange={(e) => setIsGlutenFree(e.target.checked)}
             disabled={isLoading}
-            onChange={handleCheckboxChange}
+            className="checkbox"
           />
           <span className="ml-2">Gluten-Free</span>
         </label>
