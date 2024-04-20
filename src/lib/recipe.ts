@@ -2,7 +2,11 @@ import { Recipe } from '@/types/recipe';
 import { Message } from 'ai/react';
 
 export function extractRecipes(messages: Message[]): Recipe[] | null {
-  const message = messages.find((msg) => msg.role === 'assistant');
+  const message = messages
+    .slice()
+    .reverse()
+    .find((msg) => msg.role === 'assistant');
+
   if (!message) {
     return null;
   }
