@@ -50,8 +50,8 @@ export default function InputForm({ isLoading, handleInputChange, handleSubmit, 
         glutenFree: isGlutenFree.toString(),
       },
     };
-    handleSubmit(e, requestOptions);
     clearMessages();
+    handleSubmit(e, requestOptions);
   }
 
   const clearMessages = () => {
