@@ -1,13 +1,15 @@
 import { ChatRequestOptions } from 'ai';
+import { Message } from 'ai/react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 
 interface InputFormProps {
   isLoading: boolean;
+  setMessages: (messages: Message[]) => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>, chatRequestOptions?: ChatRequestOptions) => void;
 }
 
-export default function InputForm({ isLoading, handleInputChange, handleSubmit }: InputFormProps) {
+export default function InputForm({ isLoading, handleInputChange, handleSubmit, setMessages }: InputFormProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
@@ -49,7 +51,12 @@ export default function InputForm({ isLoading, handleInputChange, handleSubmit }
       },
     };
     handleSubmit(e, requestOptions);
+    clearMessages();
   }
+
+  const clearMessages = () => {
+    setMessages([]);
+  };
 
   return (
     <form onSubmit={localHandleSubmit}>
