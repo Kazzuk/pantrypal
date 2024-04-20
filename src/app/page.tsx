@@ -2,10 +2,11 @@
 
 import Header from '@/components/header';
 import InputForm from '@/components/input-form';
+import Recipe from '@/components/recipe';
 import { useChat } from 'ai/react';
 
 export default function Home() {
-  const { isLoading, handleInputChange, handleSubmit, error } = useChat();
+  const { isLoading, handleInputChange, handleSubmit, messages, error } = useChat();
 
   if (error) {
     console.error(error);
@@ -18,7 +19,9 @@ export default function Home() {
         <div className="mx-auto w-full max-w-md">
           <InputForm isLoading={isLoading} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
         </div>
-        <div className="mx-auto w-full max-w-4xl">{/* TODO: Render the Recipe component here */}</div>
+        <div className="mx-auto w-full max-w-4xl">
+          <Recipe isLoading={isLoading} messages={messages} />
+        </div>
       </main>
     </div>
   );
