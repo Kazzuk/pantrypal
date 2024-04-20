@@ -12,21 +12,7 @@ export async function POST(req: Request) {
   try {
     const { data, messages } = await req.json();
     const ingredients = messages.map((item: any) => item.content).join(', ');
-    let prompt = `Generate a detailed recipe in a JSON format using these ingredients: ${ingredients}. Including these keys 'title', 'servings', 'ingredients', and 'instructions'. For each ingredient, include 'item', 'quantity', and 'measurement'. Instructions should be a list of steps.`;
-
-    // Add dietary requirements to the prompt if selected
-    // they are stored as string booleans and not of boolean type directly
-    if (data.vegetarian == 'true') {
-      prompt += ' Ensure the recipe is suitable for vegetarians.';
-    }
-
-    if (data.vegan == 'true') {
-      prompt += ' Ensure the recipe is suitable for vegans.';
-    }
-
-    if (data.glutenFree == 'true') {
-      prompt += ' Ensure the recipe is gluten-free.';
-    }
+    const prompt = createPrompt(data, ingredients);
 
     // Ask OpenAI for a streaming chat completion given the prompt
     const response = await openai.chat.completions.create({
@@ -50,4 +36,24 @@ export async function POST(req: Request) {
       throw error;
     }
   }
+}
+
+function createPrompt(data: any, ingredients: string): string {
+  let prompt = `Generate three detailed recipes in JSON format using these ingredients: ${ingredients}. Each recipe should vary in cuisine or cooking style. Each recipe should be unique and include the keys 'title', 'servings', 'ingredients', and 'instructions'. Each ingredient should specify 'item', 'quantity', and 'measurement'. Instructions should be a list of steps.`;
+
+  // Add dietary requirements to the prompt if selected
+  // they are stored as string booleans and not of boolean type directly
+  if (data.vegetarian === 'true') {
+    prompt += ' Ensure the recipe is suitable for vegetarians.';
+  }
+
+  if (data.vegan === 'true') {
+    prompt += ' Ensure the recipe is suitable for vegans.';
+  }
+
+  if (data.glutenFree === 'true') {
+    prompt += ' Ensure the recipe is gluten-free.';
+  }
+
+  return prompt;
 }
