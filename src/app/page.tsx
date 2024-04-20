@@ -19,7 +19,7 @@ export default function Home() {
         <div className="mx-auto w-full max-w-md">
           <InputForm isLoading={isLoading} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
         </div>
-        <div className="mx-auto w-full max-w-4xl">
+        <div className="mx-auto mt-12 w-full max-w-4xl">
           <Recipe isLoading={isLoading} messages={messages} />
         </div>
       </main>
