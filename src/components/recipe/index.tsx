@@ -21,8 +21,6 @@ export default function Recipe({ isLoading, messages }: RecipeProps) {
     return null;
   }
 
-  console.log(recipes);
-
   const currentRecipe = recipes[page - 1];
   const ingredients = currentRecipe.ingredients.map(
     (ingredient) => `${ingredient.quantity} ${ingredient.measurement} ${ingredient.item}`

@@ -6,7 +6,7 @@ import Recipe from '@/components/recipe';
 import { useChat } from 'ai/react';
 
 export default function Home() {
-  const { isLoading, handleInputChange, handleSubmit, messages, error } = useChat();
+  const { isLoading, handleInputChange, handleSubmit, messages, setMessages, error } = useChat();
 
   if (error) {
     console.error(error);
@@ -17,7 +17,12 @@ export default function Home() {
       <Header />
       <main className="w-full">
         <div className="mx-auto w-full max-w-md">
-          <InputForm isLoading={isLoading} handleInputChange={handleInputChange} handleSubmit={handleSubmit} />
+          <InputForm
+            isLoading={isLoading}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            setMessages={setMessages}
+          />
         </div>
         <div className="mx-auto mt-12 w-full max-w-4xl">
           <Recipe isLoading={isLoading} messages={messages} />
